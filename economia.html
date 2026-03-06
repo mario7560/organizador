@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economía - Control Financiero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    /* ===== VARIABLES DE COLORES - PALETA PASTEL ===== */
+    :root {
+        --lilac-fizz: #CCA1C9;
+        --cotton-candy: #FFD3DD;
+        --mauvelous: #F3A0AD;
+        --polar-sky: #BED1E3;
+        --denim: #92A1C3;
+        
+        --bg-primary: #FFFFFF;
+        --bg-secondary: #F9F9FB;
+        --bg-light: #FFF9FB;
+        
+        --text-primary: #333333;
+        --text-secondary: #666666;
+        --text-light: #FFFFFF;
+        
+        --shadow: rgba(146, 161, 195, 0.15);
+        --shadow-dark: rgba(146, 161, 195, 0.3);
+        
+        --excelente: #4CAF50;
+        --bueno: #8BC34A;
+        --regular: #FFC107;
+        --deficiente: #FF9800;
+        --critico: #F44336;
+        --cotton-candy:#FFD3DD;
+        --mauvelous:#F3A0AD ;
+
+    }
+
+    /* ===== ESTILOS GENERALES ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #F8F9FF 0%, var(--polar-sky) 100%);
+        color: var(--text-primary);
+        min-height: 100vh;
+        padding: 20px;
+        transition: all 0.4s ease;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* ===== HEADER CON TARJETAS DE RESUMEN ===== */
+    .header {
+        background: linear-gradient(135deg, var(--denim) 0%, var(--polar-sky) 100%);
+        color: var(--text-light);
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 25px var(--shadow-dark);
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .header h1 i {
+        color: var(--cotton-candy);
+    }
+
+    .resumen-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        background: var(--bg-primary);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 8px 20px var(--shadow);
+        border: 2px solid rgba(190, 209, 227, 0.3);
+        transition: all 0.4s ease;
+    }
+
+    .card:nth-child(1) { background: linear-gradient(135deg, #b932c3, #91457a); }
+    .card:nth-child(2) { background: linear-gradient(135deg, #c074a2, #de89be); }
+    .card:nth-child(3) { background: linear-gradient(135deg, #e6d64c, #cac40e); }
+
+    .card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 15px 35px var(--shadow-dark);
+    }
+
+    .card h3 {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-light);
+    }
+
+    .card .monto {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text-light);
+    }
+
+    /* ===== CONTENIDO PRINCIPAL ===== */
+    .contenido-principal {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+    }
+
+    /* ===== SECCIONES ===== */
+    .transacciones-section, .metas-section {
+        background: var(--bg-primary);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 8px 20px var(--shadow);
+        border: 2px solid rgba(190, 209, 227, 0.3);
+        transition: all 0.4s ease;
+    }
+
+    .transacciones-section:hover, .metas-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px var(--shadow-dark);
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(146, 161, 195, 0.1);
+    }
+
+    .section-header h2 {
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.6rem;
+    }
+
+    .section-header h2 i {
+        color: var(--denim);
+    }
+
+    /* ===== FILTROS Y BOTONES ===== */
+    .filtros {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    select, input, button {
+        padding: 12px 20px;
+        border: 2px solid rgba(146, 161, 195, 0.3);
+        border-radius: 50px;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+    }
+
+    select:focus, input:focus {
+        outline: none;
+        border-color: var(--denim);
+        box-shadow: 0 0 0 3px rgba(146, 161, 195, 0.1);
+    }
+
+    button {
+        background: var(--mauvelous);
+        color: var(--text-light);
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+    }
+
+    button:hover {
+        background: var(--lilac-fizz);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(204, 161, 201, 0.3);
+    }
+
+    button.secundario {
+        background: transparent;
+        color: var(--denim);
+        border: 2px solid var(--denim);
+    }
+
+    button.secundario:hover {
+        background: rgba(146, 161, 195, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(146, 161, 195, 0.2);
+    }
+
+    button.peligro {
+        background: var(--critico);
+    }
+
+    button.peligro:hover {
+        background: #d32f2f;
+    }
+
+    /* ===== TABLA DE TRANSACCIONES ===== */
+    .tabla-container {
+        overflow-x: auto;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        background: var(--bg-light);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: var(--denim);
+        color: var(--text-light);
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    th:first-child {
+        border-top-left-radius: 15px;
+    }
+
+    th:last-child {
+        border-top-right-radius: 15px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(146, 161, 195, 0.1);
+    }
+
+    tr:hover {
+        background: rgba(146, 161, 195, 0.05);
+    }
+
+    .tipo-badge {
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+.tipo-ingreso {
+    background: rgba(29, 30, 20, 0.1);
+    color: #b564e5;
+}
+
+.tipo-egreso {
+    background: rgba(20, 11, 10, 0.1);
+    color: #b95b89;
+}
+
+    .monto-positivo { 
+        color: #101013; 
+        font-weight: 600; 
+    }
+    
+    .monto-negativo { 
+        color: #f44336; 
+        font-weight: 600; 
+    }
+
+    .acciones {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-icono {
+        padding: 8px 12px;
+        background: transparent;
+        color: var(--text-secondary);
+        border: 2px solid transparent;
+        border-radius: 50px;
+    }
+
+    .btn-icono:hover {
+        background: rgba(146, 161, 195, 0.1);
+        transform: translateY(-2px);
+        box-shadow: none;
+    }
+
+    .btn-icono.editar:hover { 
+        color: var(--denim);
+        border-color: var(--denim);
+    }
+    
+    .btn-icono.eliminar:hover { 
+        color: var(--critico);
+        border-color: var(--critico);
+    }
+
+    /* ===== FORMULARIO NUEVA TRANSACCIÓN ===== */
+    .form-transaccion {
+        background: var(--bg-light);
+        padding: 25px;
+        border-radius: 20px;
+        margin-top: 20px;
+        border: 2px solid rgba(146, 161, 195, 0.1);
+    }
+
+    .form-transaccion h3 {
+        margin-bottom: 20px;
+        color: var(--denim);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .form-group label i {
+        color: var(--denim);
+    }
+
+    /* ===== METAS DE AHORRO ===== */
+    .metas-grid {
+        display: grid;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .meta-card {
+        background: var(--bg-light);
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 5px solid var(--lilac-fizz);
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .meta-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px var(--shadow-dark);
+    }
+
+    .meta-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--lilac-fizz) 0%, var(--mauvelous) 100%);
+        opacity: 0.05;
+        z-index: 0;
+    }
+
+    .meta-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .meta-titulo {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+    }
+
+    .meta-monto {
+        color: var(--denim);
+        font-weight: 600;
+    }
+
+    .meta-progreso {
+        margin: 15px 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .progreso-bar {
+        height: 8px;
+        background: rgba(146, 161, 195, 0.2);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 5px 0;
+    }
+
+    .progreso-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--lilac-fizz), var(--mauvelous));
+        transition: width 0.3s;
+    }
+
+    .meta-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        position: relative;
+        z-index: 1;
+    }
+
+    .meta-acciones {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ===== ESTADOS VACÍOS ===== */
+    .empty-state {
+        text-align: center;
+        padding: 50px;
+        color: var(--text-secondary);
+    }
+
+    .empty-state i {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        opacity: 0.3;
+        color: var(--denim);
+    }
+
+    /* ===== ANIMACIONES ===== */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 968px) {
+        .contenido-principal {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 15px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .section-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .filtros {
+            flex-direction: column;
+        }
+        
+        th, td {
+            padding: 10px;
+        }
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(146, 161, 195, 0.1);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--denim);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in srgb, var(--denim) 80%, black);
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header con resumen -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-coins"></i>
+                Control Financiero Personal
+            </h1>
+            
+            <div class="resumen-cards">
+                <div class="card">
+                    <h3><i class="fas fa-arrow-down"></i> Ingresos</h3>
+                    <div class="monto" id="totalIngresos">$0</div>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-arrow-up"></i> Egresos</h3>
+                    <div class="monto" id="totalEgresos">$0</div>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-wallet"></i> Saldo Actual</h3>
+                    <div class="monto" id="saldoActual">$0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="contenido-principal">
+            <!-- Sección de transacciones -->
+            <div class="transacciones-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Movimientos</h2>
+                    
+                    <div class="filtros">
+                        <select id="filtroMes">
+                            <option value="0">Enero</option>
+                            <option value="1">Febrero</option>
+                            <option value="2">Marzo</option>
+                            <option value="3">Abril</option>
+                            <option value="4">Mayo</option>
+                            <option value="5">Junio</option>
+                            <option value="6">Julio</option>
+                            <option value="7">Agosto</option>
+                            <option value="8">Septiembre</option>
+                            <option value="9">Octubre</option>
+                            <option value="10">Noviembre</option>
+                            <option value="11">Diciembre</option>
+                        </select>
+                        
+                        <select id="filtroTipo">
+                            <option value="todos">Todos</option>
+                            <option value="ingreso">Ingresos</option>
+                            <option value="egreso">Egresos</option>
+                        </select>
+                        
+                        <button onclick="aplicarFiltros()" class="secundario">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                        <button onclick="limpiarFiltros()" class="secundario">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabla de transacciones -->
+                <div class="tabla-container">
+                    <table id="tablaTransacciones">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Descripción</th>
+                                <th>Categoría</th>
+                                <th>Subcategoría</th>
+                                <th>Tipo</th>
+                                <th>Monto</th>
+                                <th>Saldo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaccionesBody">
+                            <!-- Se llena con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Formulario nueva transacción -->
+                <div class="form-transaccion">
+                    <h3 style="margin-bottom: 15px;">
+                        <i class="fas fa-plus-circle"></i> 
+                        Nueva Transacción
+                    </h3>
+                    
+                    <form id="formTransaccion">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label><i class="fas fa-align-left"></i> Descripción</label>
+                                <input type="text" id="descripcion" required placeholder="Ej: Salario mensual">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-tag"></i> Tipo</label>
+                                <select id="tipo" required onchange="actualizarCategorias()">
+                                    <option value="">Seleccionar</option>
+                                    <option value="ingreso">Ingreso</option>
+                                    <option value="egreso">Egreso</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-list"></i> Categoría</label>
+                                <select id="categoria" required onchange="actualizarSubcategorias()">
+                                    <option value="">Primero selecciona tipo</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-layer-group"></i> Subcategoría</label>
+                                <select id="subcategoria" required>
+                                    <option value="">Selecciona categoría</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-dollar-sign"></i> Monto</label>
+                                <input type="number" id="monto" required min="0" step="0.01" placeholder="0.00">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar"></i> Fecha</label>
+                                <input type="date" id="fecha" required>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button type="button" class="secundario" onclick="limpiarFormulario()">
+                                Cancelar
+                            </button>
+                            <button type="submit">
+                                <i class="fas fa-save"></i> Guardar Transacción
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sección de metas -->
+            <div class="metas-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-bullseye"></i> Metas de Ahorro</h2>
+                    <button onclick="mostrarFormMeta()" class="secundario">
+                        <i class="fas fa-plus"></i> Nueva Meta
+                    </button>
+                </div>
+
+                <!-- Formulario nueva meta (oculto inicialmente) -->
+                <div id="formMetaContainer" style="display: none; margin-bottom: 20px;">
+                    <div class="form-transaccion">
+                        <h4 style="margin-bottom: 15px;">Crear Nueva Meta</h4>
+                        <form id="formMeta">
+                            <div class="form-group">
+                                <label><i class="fas fa-heading"></i> Nombre de la Meta</label>
+                                <input type="text" id="metaNombre" required placeholder="Ej: Computadora nueva">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-dollar-sign"></i> Monto Necesario</label>
+                                <input type="number" id="metaMonto" required min="0" step="0.01" placeholder="0.00">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar"></i> Fecha Límite</label>
+                                <input type="date" id="metaFechaLimite" required>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button type="button" class="secundario" onclick="ocultarFormMeta()">
+                                    Cancelar
+                                </button>
+                                <button type="submit">
+                                    <i class="fas fa-save"></i> Guardar Meta
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lista de metas -->
+                <div id="metasContainer" class="metas-grid">
+                    <!-- Se llena con JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos iniciales
+        let transacciones = JSON.parse(localStorage.getItem('transacciones')) || [];
+        let metas = JSON.parse(localStorage.getItem('metas')) || [];
+        
+        // Configuración de categorías
+        const categorias = {
+            ingreso: [
+                { nombre: 'Trabajo', subcategorias: ['Salario', 'Bonos', 'Horas extra', 'Comisiones'] },
+                { nombre: 'Diezmo', subcategorias: ['Diezmo', 'Ofrenda', 'Primicias'] },
+                { nombre: 'Iglesia', subcategorias: ['Donación', 'Servicio', 'Evento'] },
+                { nombre: 'Otros', subcategorias: ['Ventas', 'Inversiones', 'Regalos'] }
+            ],
+            egreso: [
+                { nombre: 'Personal', subcategorias: ['Ropa', 'Comida', 'Salud', 'Educación', 'Transporte'] },
+                { nombre: 'Hogar', subcategorias: ['Renta', 'Servicios', 'Mantenimiento', 'Muebles'] },
+                { nombre: 'Pases', subcategorias: ['Cine', 'Restaurante', 'Viajes', 'Eventos'] },
+                { nombre: 'Diezmo/Ofrenda', subcategorias: ['Diezmo', 'Ofrenda', 'Ayuda social'] },
+                { nombre: 'Iglesia', subcategorias: ['Donación', 'Evento', 'Transporte iglesia'] }
+            ]
+        };
+
+        // Estado de edición
+        let editandoId = null;
+        let editandoMetaId = null;
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha actual por defecto
+            const hoy = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').value = hoy;
+            
+            // Cargar datos
+            actualizarTabla();
+            actualizarResumen();
+            actualizarMetas();
+            
+            // Configurar eventos
+            document.getElementById('formTransaccion').addEventListener('submit', guardarTransaccion);
+            document.getElementById('formMeta').addEventListener('submit', guardarMeta);
+            
+            // Filtro mes por defecto al mes actual
+            const mesActual = new Date().getMonth();
+            document.getElementById('filtroMes').value = mesActual;
+        });
+
+        // Funciones para categorías
+        function actualizarCategorias() {
+            const tipo = document.getElementById('tipo').value;
+            const categoriaSelect = document.getElementById('categoria');
+            const subcategoriaSelect = document.getElementById('subcategoria');
+            
+            categoriaSelect.innerHTML = '<option value="">Seleccionar</option>';
+            subcategoriaSelect.innerHTML = '<option value="">Primero selecciona categoría</option>';
+            
+            if (!tipo) return;
+            
+            categorias[tipo].forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.nombre;
+                option.textContent = cat.nombre;
+                categoriaSelect.appendChild(option);
+            });
+        }
+
+        function actualizarSubcategorias() {
+            const tipo = document.getElementById('tipo').value;
+            const categoria = document.getElementById('categoria').value;
+            const subcategoriaSelect = document.getElementById('subcategoria');
+            
+            subcategoriaSelect.innerHTML = '<option value="">Seleccionar</option>';
+            
+            if (!tipo || !categoria) return;
+            
+            const catData = categorias[tipo].find(c => c.nombre === categoria);
+            if (catData) {
+                catData.subcategorias.forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub;
+                    option.textContent = sub;
+                    subcategoriaSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Gestión de transacciones
+        function guardarTransaccion(e) {
+            e.preventDefault();
+            
+            const transaccion = {
+                id: editandoId || Date.now(),
+                descripcion: document.getElementById('descripcion').value,
+                tipo: document.getElementById('tipo').value,
+                categoria: document.getElementById('categoria').value,
+                subcategoria: document.getElementById('subcategoria').value,
+                monto: parseFloat(document.getElementById('monto').value),
+                fecha: document.getElementById('fecha').value
+            };
+            
+            if (editandoId) {
+                const index = transacciones.findIndex(t => t.id === editandoId);
+                if (index !== -1) {
+                    transacciones[index] = transaccion;
+                }
+                editandoId = null;
+            } else {
+                transacciones.push(transaccion);
+            }
+            
+            // Ordenar por fecha (más reciente primero)
+            transacciones.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+            
+            localStorage.setItem('transacciones', JSON.stringify(transacciones));
+            limpiarFormulario();
+            actualizarTabla();
+            actualizarResumen();
+        }
+
+        function editarTransaccion(id) {
+            const transaccion = transacciones.find(t => t.id === id);
+            if (!transaccion) return;
+            
+            editandoId = id;
+            document.getElementById('descripcion').value = transaccion.descripcion;
+            document.getElementById('tipo').value = transaccion.tipo;
+            
+            actualizarCategorias();
+            setTimeout(() => {
+                document.getElementById('categoria').value = transaccion.categoria;
+                actualizarSubcategorias();
+                setTimeout(() => {
+                    document.getElementById('subcategoria').value = transaccion.subcategoria;
+                }, 100);
+            }, 100);
+            
+            document.getElementById('monto').value = transaccion.monto;
+            document.getElementById('fecha').value = transaccion.fecha;
+            
+            // Cambiar texto del botón submit
+            const submitBtn = document.querySelector('#formTransaccion button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-edit"></i> Actualizar';
+        }
+
+        function eliminarTransaccion(id) {
+            if (confirm('¿Estás seguro de eliminar esta transacción?')) {
+                transacciones = transacciones.filter(t => t.id !== id);
+                localStorage.setItem('transacciones', JSON.stringify(transacciones));
+                actualizarTabla();
+                actualizarResumen();
+            }
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('formTransaccion').reset();
+            document.getElementById('categoria').innerHTML = '<option value="">Primero selecciona tipo</option>';
+            document.getElementById('subcategoria').innerHTML = '<option value="">Selecciona categoría</option>';
+            
+            const hoy = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').value = hoy;
+            
+            editandoId = null;
+            
+            const submitBtn = document.querySelector('#formTransaccion button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Guardar Transacción';
+        }
+
+        // Filtros
+        function aplicarFiltros() {
+            actualizarTabla();
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('filtroMes').value = new Date().getMonth();
+            document.getElementById('filtroTipo').value = 'todos';
+            actualizarTabla();
+        }
+
+        // Actualizar tabla
+        function actualizarTabla() {
+            const tbody = document.getElementById('transaccionesBody');
+            const filtroMes = parseInt(document.getElementById('filtroMes').value);
+            const filtroTipo = document.getElementById('filtroTipo').value;
+            
+            let transaccionesFiltradas = [...transacciones];
+            
+            // Aplicar filtro de mes
+            if (!isNaN(filtroMes) && filtroMes >= 0) {
+                transaccionesFiltradas = transaccionesFiltradas.filter(t => {
+                    const fecha = new Date(t.fecha);
+                    return fecha.getMonth() === filtroMes;
+                });
+            }
+            
+            // Aplicar filtro de tipo
+            if (filtroTipo !== 'todos') {
+                transaccionesFiltradas = transaccionesFiltradas.filter(t => t.tipo === filtroTipo);
+            }
+            
+            if (transaccionesFiltradas.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No hay transacciones para mostrar</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Calcular saldo acumulado
+            let saldo = 0;
+            let filas = '';
+            
+            transaccionesFiltradas.forEach(t => {
+                if (t.tipo === 'ingreso') {
+                    saldo += t.monto;
+                } else {
+                    saldo -= t.monto;
+                }
+                
+                filas += `
+                    <tr>
+                        <td>${formatearFecha(t.fecha)}</td>
+                        <td>${t.descripcion}</td>
+                        <td>${t.categoria || '-'}</td>
+                        <td>${t.subcategoria || '-'}</td>
+                        <td>
+                            <span class="tipo-badge tipo-${t.tipo}">
+                                ${t.tipo === 'ingreso' ? 'Ingreso' : 'Egreso'}
+                            </span>
+                        </td>
+                        <td class="${t.tipo === 'ingreso' ? 'monto-positivo' : 'monto-negativo'}">
+                            ${t.tipo === 'ingreso' ? '+' : '-'}$${t.monto.toFixed(2)}
+                        </td>
+                        <td class="${saldo >= 0 ? 'monto-positivo' : 'monto-negativo'}">
+                            $${saldo.toFixed(2)}
+                        </td>
+                        <td>
+                            <div class="acciones">
+                                <button class="btn-icono editar" onclick="editarTransaccion(${t.id})" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icono eliminar" onclick="eliminarTransaccion(${t.id})" title="Eliminar">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = filas;
+        }
+
+        // Actualizar resumen
+        function actualizarResumen() {
+            let totalIngresos = 0;
+            let totalEgresos = 0;
+            
+            transacciones.forEach(t => {
+                if (t.tipo === 'ingreso') {
+                    totalIngresos += t.monto;
+                } else {
+                    totalEgresos += t.monto;
+                }
+            });
+            
+            const saldo = totalIngresos - totalEgresos;
+            
+            document.getElementById('totalIngresos').textContent = `$${totalIngresos.toFixed(2)}`;
+            document.getElementById('totalEgresos').textContent = `$${totalEgresos.toFixed(2)}`;
+            document.getElementById('saldoActual').textContent = `$${saldo.toFixed(2)}`;
+            
+            // Cambiar color del saldo según sea positivo o negativo
+            const saldoElement = document.getElementById('saldoActual');
+            saldoElement.style.color = saldo >= 0 ? '#4CAF50' : '#f44336';
+        }
+
+        // Gestión de metas
+        function mostrarFormMeta() {
+            document.getElementById('formMetaContainer').style.display = 'block';
+        }
+
+        function ocultarFormMeta() {
+            document.getElementById('formMetaContainer').style.display = 'none';
+            document.getElementById('formMeta').reset();
+            editandoMetaId = null;
+        }
+
+        function guardarMeta(e) {
+            e.preventDefault();
+            
+            const meta = {
+                id: editandoMetaId || Date.now(),
+                nombre: document.getElementById('metaNombre').value,
+                montoNecesario: parseFloat(document.getElementById('metaMonto').value),
+                fechaLimite: document.getElementById('metaFechaLimite').value,
+                montoActual: 0,
+                fechaCreacion: new Date().toISOString().split('T')[0]
+            };
+            
+            if (editandoMetaId) {
+                const index = metas.findIndex(m => m.id === editandoMetaId);
+                if (index !== -1) {
+                    metas[index] = { ...metas[index], ...meta };
+                }
+                editandoMetaId = null;
+            } else {
+                metas.push(meta);
+            }
+            
+            localStorage.setItem('metas', JSON.stringify(metas));
+            ocultarFormMeta();
+            actualizarMetas();
+        }
+
+        function agregarAhorroMeta(id) {
+            const meta = metas.find(m => m.id === id);
+            if (!meta) return;
+            
+            const monto = prompt('¿Cuánto quieres añadir a esta meta?', '0');
+            if (monto !== null) {
+                const montoNum = parseFloat(monto);
+                if (!isNaN(montoNum) && montoNum > 0) {
+                    meta.montoActual += montoNum;
+                    
+                    // Si se alcanzó la meta
+                    if (meta.montoActual >= meta.montoNecesario) {
+                        if (confirm('¡Felicidades! Has alcanzado tu meta. ¿Marcarla como completada?')) {
+                            meta.completada = true;
+                        }
+                    }
+                    
+                    localStorage.setItem('metas', JSON.stringify(metas));
+                    actualizarMetas();
+                }
+            }
+        }
+
+        function eliminarMeta(id) {
+            if (confirm('¿Estás seguro de eliminar esta meta?')) {
+                metas = metas.filter(m => m.id !== id);
+                localStorage.setItem('metas', JSON.stringify(metas));
+                actualizarMetas();
+            }
+        }
+
+        function actualizarMetas() {
+            const container = document.getElementById('metasContainer');
+            
+            if (metas.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-bullseye"></i>
+                        <p>No tienes metas de ahorro. ¡Crea una!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            const hoy = new Date();
+            
+            metas.forEach(meta => {
+                if (meta.completada) return;
+                
+                const progreso = (meta.montoActual / meta.montoNecesario) * 100;
+                const fechaLimite = new Date(meta.fechaLimite);
+                const diasRestantes = Math.ceil((fechaLimite - hoy) / (1000 * 60 * 60 * 24));
+                const ahorroDiario = (meta.montoNecesario - meta.montoActual) / Math.max(diasRestantes, 1);
+                
+                html += `
+                    <div class="meta-card">
+                        <div class="meta-header">
+                            <span class="meta-titulo">${meta.nombre}</span>
+                            <span class="meta-monto">$${meta.montoActual.toFixed(2)} / $${meta.montoNecesario.toFixed(2)}</span>
+                        </div>
+                        
+                        <div class="meta-progreso">
+                            <div class="progreso-bar">
+                                <div class="progreso-fill" style="width: ${progreso}%"></div>
+                            </div>
+                            <div class="meta-info">
+                                <span>${progreso.toFixed(1)}% completado</span>
+                                <span>${diasRestantes} días restantes</span>
+                            </div>
+                        </div>
+                        
+                        <div class="meta-info" style="margin-top: 5px; color: var(--info);">
+                            <span><i class="fas fa-piggy-bank"></i> Ahorro diario sugerido:</span>
+                            <span>$${ahorroDiario.toFixed(2)}</span>
+                        </div>
+                        
+                        <div class="meta-acciones">
+                            <button class="secundario" style="flex: 1;" onclick="agregarAhorroMeta(${meta.id})">
+                                <i class="fas fa-plus"></i> Añadir Ahorro
+                            </button>
+                            <button class="btn-icono eliminar" onclick="eliminarMeta(${meta.id})" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Utilidades
+        function formatearFecha(fechaStr) {
+            const fecha = new Date(fechaStr);
+            return fecha.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+    </script>
+</body>
+</html>

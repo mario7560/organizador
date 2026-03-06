@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Hogar - Tareas, Mascotas y Recuerdos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== VARIABLES DE COLORES ===== */
+        :root {
+            --lilac-fizz: #CCA1C9;
+            --cotton-candy: #FFD3DD;
+            --mauvelous: #F3A0AD;
+            --polar-sky: #BED1E3;
+            --denim: #92A1C3;
+            
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9F9FB;
+            
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-light: #FFFFFF;
+            
+            --shadow: rgba(146, 161, 195, 0.15);
+            --shadow-dark: rgba(146, 161, 195, 0.3);
+            
+            --tareas: #F3A0AD;
+            --mascota: #CCA1C9;
+            --familia: #92A1C3;
+            --metas: #BED1E3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #F8F9FF 0%, var(--polar-sky) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .main-header {
+            background: linear-gradient(135deg, var(--denim) 0%, var(--lilac-fizz) 100%);
+            color: var(--text-light);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px var(--shadow-dark);
+        }
+
+        .main-header h1 {
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* ===== TARJETAS RESUMEN ===== */
+        .resumen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0 30px;
+        }
+
+        .resumen-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 20px var(--shadow);
+            border-left: 5px solid;
+        }
+
+        .resumen-card.tareas { border-color: var(--tareas); }
+        .resumen-card.mascota { border-color: var(--mascota); }
+        .resumen-card.metas { border-color: var(--metas); }
+        .resumen-card.familia { border-color: var(--familia); }
+
+        .resumen-card .numero {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* ===== MINI CALENDARIO SEMANAL ===== */
+        .mini-calendario {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .selector-semana {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .semana-navegacion {
+            display: flex;
+            gap: 10px;
+        }
+
+        .semana-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--denim);
+            background: transparent;
+            color: var(--denim);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .semana-btn:hover {
+            background: var(--denim);
+            color: white;
+        }
+
+        .semana-actual {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--denim);
+        }
+
+        .calendario-semanal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+        }
+
+        .dia-mini-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .dia-mini-card.hoy {
+            border-color: var(--mauvelous);
+            background: rgba(243, 160, 173, 0.05);
+        }
+
+        .dia-nombre {
+            font-weight: 600;
+            color: var(--denim);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .dia-actividades {
+            font-size: 0.85rem;
+        }
+
+        .actividad-item {
+            padding: 5px;
+            margin: 3px 0;
+            border-radius: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .actividad-tarea { background: rgba(243, 160, 173, 0.2); color: var(--tareas); }
+        .actividad-mascota { background: rgba(204, 161, 201, 0.2); color: var(--mascota); }
+        .actividad-meta { background: rgba(190, 209, 227, 0.2); color: var(--metas); }
+
+        /* ===== TABS PRINCIPALES ===== */
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            background: var(--bg-primary);
+            border: 2px solid var(--denim);
+            color: var(--denim);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(146, 161, 195, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--denim);
+            color: white;
+        }
+
+        .tab-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-section.active {
+            display: block;
+        }
+
+        /* ===== SECCIÓN TAREAS DOMÉSTICAS ===== */
+        .tareas-domesticas-section {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .tareas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .tareas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .tarea-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid var(--tareas);
+            transition: all 0.3s;
+        }
+
+        .tarea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        .tarea-titulo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dias-semana {
+            display: flex;
+            gap: 5px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .dia-badge {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--tareas);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--tareas);
+        }
+
+        .dia-badge.activo {
+            background: var(--tareas);
+            color: white;
+        }
+
+        .checklist-dia {
+            margin: 10px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .check-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .check-item.completado {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        /* ===== SECCIÓN MASCOTA ===== */
+        .mascota-section {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .mascota-perfil {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .mascota-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--mascota);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .mascota-info h2 {
+            color: var(--mascota);
+            margin-bottom: 10px;
+        }
+
+        .tareas-mascota-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tarea-mascota-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid var(--mascota);
+        }
+
+        .progreso-diario {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .check-diario {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--mascota);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .check-diario.completado {
+            background: var(--mascota);
+            color: white;
+        }
+
+        /* ===== SECCIÓN METAS ===== */
+        .metas-section {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .metas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .meta-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid var(--metas);
+        }
+
+        .meta-progreso {
+            margin: 15px 0;
+        }
+
+        .progreso-bar {
+            height: 10px;
+            background: rgba(190, 209, 227, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progreso-fill {
+            height: 100%;
+            background: var(--metas);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* ===== GALERÍA DE RECUERDOS ===== */
+        .galeria-section {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .galeria-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .galeria-tab {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: transparent;
+            border: 2px solid var(--familia);
+            color: var(--familia);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .galeria-tab.active {
+            background: var(--familia);
+            color: white;
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .recuerdo-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .recuerdo-card:hover {
+            transform: scale(1.05);
+        }
+
+        .recuerdo-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            background: linear-gradient(45deg, var(--familia), var(--mascota));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .recuerdo-info {
+            padding: 10px;
+        }
+
+        .recuerdo-fecha {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== MODALES ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 20px 40px var(--shadow-dark);
+        }
+
+        .modal h2 {
+            color: var(--denim);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(146, 161, 195, 0.3);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .dias-selector {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .dia-checkbox {
+            text-align: center;
+        }
+
+        .dia-checkbox input {
+            display: none;
+        }
+
+        .dia-checkbox label {
+            display: block;
+            padding: 8px;
+            background: rgba(146, 161, 195, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .dia-checkbox input:checked + label {
+            background: var(--mauvelous);
+            color: white;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--denim);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--lilac-fizz);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--denim);
+            border: 2px solid var(--denim);
+        }
+
+        /* ===== ANIMACIONES ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .calendario-semanal-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .mascota-perfil {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="main-header">
+            <h1>
+                <i class="fas fa-home"></i>
+                Mi Hogar · Tareas, Mascotas y Recuerdos
+            </h1>
+        </header>
+
+        <!-- TARJETAS DE RESUMEN -->
+        <div class="resumen-grid">
+            <div class="resumen-card tareas">
+                <h3><i class="fas fa-broom"></i> Tareas Hoy</h3>
+                <div class="numero" id="resumenTareasHoy">0</div>
+                <small>pendientes</small>
+            </div>
+            <div class="resumen-card mascota">
+                <h3><i class="fas fa-paw"></i> Cuidados Mascota</h3>
+                <div class="numero" id="resumenMascotaHoy">0/0</div>
+                <small>completados hoy</small>
+            </div>
+            <div class="resumen-card metas">
+                <h3><i class="fas fa-trophy"></i> Metas Familiares</h3>
+                <div class="numero" id="resumenMetas">0</div>
+                <small>en progreso</small>
+            </div>
+            <div class="resumen-card familia">
+                <h3><i class="fas fa-images"></i> Recuerdos</h3>
+                <div class="numero" id="resumenRecuerdos">0</div>
+                <small>fotos guardadas</small>
+            </div>
+        </div>
+
+        <!-- MINI CALENDARIO SEMANAL -->
+        <div class="mini-calendario">
+            <div class="selector-semana">
+                <h2><i class="fas fa-calendar-alt"></i> Mi Semana</h2>
+                <div class="semana-navegacion">
+                    <button class="semana-btn" onclick="cambiarSemana(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <span class="semana-actual" id="semanaActualTexto">Semana 10, 2026</span>
+                    <button class="semana-btn" onclick="cambiarSemana(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="calendario-semanal-grid" id="calendarioSemanal">
+                <!-- Se llena con JS -->
+            </div>
+        </div>
+
+        <!-- TABS PRINCIPALES -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="tareas">
+                <i class="fas fa-broom"></i> Tareas Domésticas
+            </button>
+            <button class="tab-btn" data-tab="mascota">
+                <i class="fas fa-paw"></i> Mi Mascota
+            </button>
+            <button class="tab-btn" data-tab="metas">
+                <i class="fas fa-bullseye"></i> Metas Familiares
+            </button>
+            <button class="tab-btn" data-tab="galeria">
+                <i class="fas fa-images"></i> Galería de Recuerdos
+            </button>
+        </div>
+
+        <!-- SECCIÓN TAREAS DOMÉSTICAS -->
+        <section class="tab-section active" id="tab-tareas">
+            <div class="tareas-domesticas-section">
+                <div class="tareas-header">
+                    <h2><i class="fas fa-broom" style="color: var(--tareas);"></i> Tareas del Hogar</h2>
+                    <button class="btn-primary" onclick="abrirModal('tarea')">
+                        <i class="fas fa-plus"></i> Nueva Tarea
+                    </button>
+                </div>
+                <div class="tareas-grid" id="tareasGrid"></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN MASCOTA -->
+        <section class="tab-section" id="tab-mascota">
+            <div class="mascota-section">
+                <div class="mascota-perfil">
+                    <div class="mascota-avatar">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <div class="mascota-info">
+                        <h2>Cuidados de mi Mascota</h2>
+                        <p>Rutina diaria y tareas pendientes</p>
+                    </div>
+                    <button class="btn-primary" onclick="abrirModal('tareaMascota')">
+                        <i class="fas fa-plus"></i> Nueva Tarea
+                    </button>
+                </div>
+                <div class="tareas-mascota-grid" id="mascotaTareasGrid"></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN METAS FAMILIARES -->
+        <section class="tab-section" id="tab-metas">
+            <div class="metas-section">
+                <div class="tareas-header">
+                    <h2><i class="fas fa-bullseye" style="color: var(--metas);"></i> Metas Familiares</h2>
+                    <button class="btn-primary" onclick="abrirModal('meta')">
+                        <i class="fas fa-plus"></i> Nueva Meta
+                    </button>
+                </div>
+                <div class="metas-grid" id="metasGrid"></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN GALERÍA DE RECUERDOS -->
+        <section class="tab-section" id="tab-galeria">
+            <div class="galeria-section">
+                <div class="tareas-header">
+                    <h2><i class="fas fa-images" style="color: var(--familia);"></i> Galería de Recuerdos</h2>
+                    <button class="btn-primary" onclick="abrirModal('recuerdo')">
+                        <i class="fas fa-plus"></i> Agregar Foto
+                    </button>
+                </div>
+                
+                <div class="galeria-tabs">
+                    <button class="galeria-tab active" onclick="filtrarGaleria('todos')">Todos</button>
+                    <button class="galeria-tab" onclick="filtrarGaleria('familia')">Familia</button>
+                    <button class="galeria-tab" onclick="filtrarGaleria('mascota')">Mascota</button>
+                </div>
+                
+                <div class="galeria-grid" id="galeriaGrid"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL PARA AGREGAR/EDITAR -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2 id="modalTitle"><i class="fas fa-plus-circle"></i> Nuevo</h2>
+            <form id="modalForm">
+                <div id="modalContent"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATOS INICIALES =====
+        let tareasDomesticas = JSON.parse(localStorage.getItem('tareasDomesticas')) || [];
+        let tareasMascota = JSON.parse(localStorage.getItem('tareasMascota')) || [];
+        let metasFamiliares = JSON.parse(localStorage.getItem('metasFamiliares')) || [];
+        let recuerdos = JSON.parse(localStorage.getItem('recuerdos')) || [];
+        
+        let semanaActual = 0; // 0 = semana actual
+        let modalTipo = null;
+        let modalEditandoId = null;
+
+        // Días de la semana
+        const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        const diasAbr = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+
+        // ===== DATOS DE EJEMPLO =====
+        function cargarDatosEjemplo() {
+            if (tareasDomesticas.length === 0) {
+                tareasDomesticas = [
+                    { id: 1, nombre: 'Barrer la cocina', dias: [1, 3, 5], completadas: {} },
+                    { id: 2, nombre: 'Trapear el piso', dias: [5], completadas: {} },
+                    { id: 3, nombre: 'Limpiar el baño', dias: [5], completadas: {} },
+                    { id: 4, nombre: 'Sacar la basura', dias: [2, 4, 6], completadas: {} },
+                    { id: 5, nombre: 'Limpiar ventanas', dias: [6], completadas: {} }
+                ];
+            }
+
+            if (tareasMascota.length === 0) {
+                tareasMascota = [
+                    { id: 1, nombre: 'Alimentar', dias: [1,2,3,4,5,6,7], horarios: ['08:00', '20:00'], completadas: {} },
+                    { id: 2, nombre: 'Sacar a pasear', dias: [1,2,3,4,5,6,7], completadas: {} },
+                    { id: 3, nombre: 'Limpiar arenero', dias: [2,4,6], completadas: {} },
+                    { id: 4, nombre: 'Cepillar', dias: [3,7], completadas: {} },
+                    { id: 5, nombre: 'Vacunas', dias: [7], completadas: {}, esMensual: true }
+                ];
+            }
+
+            if (metasFamiliares.length === 0) {
+                metasFamiliares = [
+                    { id: 1, titulo: 'Ahorrar para vacaciones', progreso: 30, fecha: '2026-12-31' },
+                    { id: 2, titulo: 'Leer 20 min en familia', progreso: 45, fecha: '2026-06-30' },
+                    { id: 3, titulo: 'Salida familiar cada mes', progreso: 25, fecha: '2026-12-31' }
+                ];
+            }
+
+            if (recuerdos.length === 0) {
+                recuerdos = [
+                    { id: 1, tipo: 'familia', titulo: 'Cumpleaños de mamá', fecha: '2026-03-15', imagen: null },
+                    { id: 2, tipo: 'mascota', titulo: 'Primer paseo', fecha: '2026-02-10', imagen: null },
+                    { id: 3, tipo: 'familia', titulo: 'Día de playa', fecha: '2026-01-20', imagen: null },
+                    { id: 4, tipo: 'mascota', titulo: 'Bebé recién llegado', fecha: '2025-12-01', imagen: null }
+                ];
+            }
+
+            guardarDatos();
+        }
+
+        function guardarDatos() {
+            localStorage.setItem('tareasDomesticas', JSON.stringify(tareasDomesticas));
+            localStorage.setItem('tareasMascota', JSON.stringify(tareasMascota));
+            localStorage.setItem('metasFamiliares', JSON.stringify(metasFamiliares));
+            localStorage.setItem('recuerdos', JSON.stringify(recuerdos));
+        }
+
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDatosEjemplo();
+            configurarTabs();
+            actualizarTodo();
+        });
+
+        function configurarTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById(`tab-${tab}`).classList.add('active');
+                });
+            });
+        }
+
+        // ===== ACTUALIZAR TODO =====
+        function actualizarTodo() {
+            actualizarCalendarioSemanal();
+            actualizarTareasGrid();
+            actualizarTareasMascotaGrid();
+            actualizarMetasGrid();
+            actualizarGaleriaGrid();
+            actualizarResumen();
+        }
+
+        // ===== CALENDARIO SEMANAL =====
+        function actualizarCalendario() {
+            const grid = document.getElementById('calendarioSemanal');
+            const dias = obtenerDiasSemana(semanaActual);
+            
+            let html = '';
+            dias.forEach((dia, index) => {
+                const fechaStr = dia.toISOString().split('T')[0];
+                const diaNum = index + 1;
+                const esHoy = esMismoDia(dia, new Date());
+                
+                // Obtener actividades del día
+                const tareasDia = tareasDomesticas.filter(t => t.dias.includes(diaNum));
+                const tareasMascotaDia = tareasMascota.filter(t => t.dias.includes(diaNum));
+                
+                html += `
+                    <div class="dia-mini-card ${esHoy ? 'hoy' : ''}">
+                        <div class="dia-nombre">
+                            ${diasSemana[index]}<br>
+                            <small>${dia.getDate()}/${dia.getMonth()+1}</small>
+                        </div>
+                        <div class="dia-actividades">
+                            ${tareasDia.slice(0, 2).map(t => 
+                                `<div class="actividad-item actividad-tarea" title="${t.nombre}">
+                                    <i class="fas fa-broom"></i> ${t.nombre.substring(0, 15)}...
+                                </div>`
+                            ).join('')}
+                            ${tareasMascotaDia.slice(0, 2).map(t => 
+                                `<div class="actividad-item actividad-mascota" title="${t.nombre}">
+                                    <i class="fas fa-paw"></i> ${t.nombre.substring(0, 15)}...
+                                </div>`
+                            ).join('')}
+                            ${tareasDia.length + tareasMascotaDia.length > 4 ? 
+                                `<div class="actividad-item">+${tareasDia.length + tareasMascotaDia.length - 4} más</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+            
+            // Actualizar texto de semana
+            const inicio = dias[0];
+            const fin = dias[6];
+            document.getElementById('semanaActualTexto').innerHTML = 
+                `${inicio.getDate()} ${inicio.toLocaleString('es', { month: 'short' })} - ${fin.getDate()} ${fin.toLocaleString('es', { month: 'short' })} ${fin.getFullYear()}`;
+        }
+
+        function obtenerDiasSemana(semanaOffset) {
+            const hoy = new Date();
+            const diaSemana = hoy.getDay() || 7; // 1 = Lunes, 7 = Domingo
+            const dias = [];
+            
+            // Calcular inicio de semana (lunes)
+            const inicio = new Date(hoy);
+            inicio.setDate(hoy.getDate() - (diaSemana - 1) + (semanaOffset * 7));
+            
+            for (let i = 0; i < 7; i++) {
+                const dia = new Date(inicio);
+                dia.setDate(inicio.getDate() + i);
+                dias.push(dia);
+            }
+            
+            return dias;
+        }
+
+        function esMismoDia(dia1, dia2) {
+            return dia1.getDate() === dia2.getDate() &&
+                   dia1.getMonth() === dia2.getMonth() &&
+                   dia1.getFullYear() === dia2.getFullYear();
+        }
+
+        function cambiarSemana(delta) {
+            semanaActual += delta;
+            actualizarCalendario();
+        }
+
+        // ===== TAREAS DOMÉSTICAS =====
+        function actualizarTareasGrid() {
+            const grid = document.getElementById('tareasGrid');
+            const hoy = new Date().getDay() || 7;
+            const fechaHoy = new Date().toISOString().split('T')[0];
+            
+            grid.innerHTML = tareasDomesticas.map(tarea => {
+                const aplicaHoy = tarea.dias.includes(hoy);
+                
+                return `
+                    <div class="tarea-card">
+                        <div class="tarea-titulo">
+                            <span>${tarea.nombre}</span>
+                            <div>
+                                <button class="btn-icono" onclick="editarTarea(${tarea.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icono" onclick="eliminarTarea(${tarea.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="dias-semana">
+                            ${diasAbr.map((dia, i) => `
+                                <div class="dia-badge ${tarea.dias.includes(i+1) ? 'activo' : ''}">
+                                    ${dia}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        ${aplicaHoy ? `
+                            <div class="checklist-dia">
+                                <div class="check-item ${tarea.completadas && tarea.completadas[fechaHoy] ? 'completado' : ''}">
+                                    <input type="checkbox" 
+                                           ${tarea.completadas && tarea.completadas[fechaHoy] ? 'checked' : ''}
+                                           onchange="marcarTareaCompletada(${tarea.id}, '${fechaHoy}', this.checked)">
+                                    <span>Marcar como completada hoy</span>
+                                </div>
+                            </div>
+                        ` : '<div style="color:#999; padding:10px;">No aplica hoy</div>'}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function marcarTareaCompletada(id, fecha, completada) {
+            const tarea = tareasDomesticas.find(t => t.id === id);
+            if (tarea) {
+                if (!tarea.completadas) tarea.completadas = {};
+                tarea.completadas[fecha] = completada;
+                guardarDatos();
+                actualizarTareasGrid();
+                actualizarCalendario();
+                actualizarResumen();
+            }
+        }
+
+        // ===== TAREAS DE MASCOTA =====
+        function actualizarTareasMascotaGrid() {
+            const grid = document.getElementById('mascotaTareasGrid');
+            const hoy = new Date().getDay() || 7;
+            const fechaHoy = new Date().toISOString().split('T')[0];
+            
+            grid.innerHTML = tareasMascota.map(tarea => {
+                const aplicaHoy = tarea.dias.includes(hoy);
+                
+                return `
+                    <div class="tarea-mascota-card">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h3>${tarea.nombre}</h3>
+                            <div>
+                                <button class="btn-icono" onclick="editarTareaMascota(${tarea.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-icono" onclick="eliminarTareaMascota(${tarea.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="dias-semana">
+                            ${diasAbr.map((dia, i) => `
+                                <div class="dia-badge" style="border-color: var(--mascota); color: var(--mascota); ${tarea.dias.includes(i+1) ? 'background: var(--mascota); color:white;' : ''}">
+                                    ${dia}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        ${aplicaHoy ? `
+                            <div class="progreso-diario">
+                                ${tarea.horarios ? tarea.horarios.map((hora, i) => `
+                                    <div class="check-diario ${tarea.completadas && tarea.completadas[`${fechaHoy}_${i}`] ? 'completado' : ''}"
+                                         onclick="marcarTareaMascotaCompletada(${tarea.id}, '${fechaHoy}', ${i})">
+                                        <small>${hora}</small>
+                                    </div>
+                                `).join('') : `
+                                    <div class="check-diario ${tarea.completadas && tarea.completadas[fechaHoy] ? 'completado' : ''}"
+                                         onclick="marcarTareaMascotaCompletada(${tarea.id}, '${fechaHoy}')">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                `}
+                            </div>
+                        ` : '<div style="color:#999; padding:10px;">No aplica hoy</div>'}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function marcarTareaMascotaCompletada(id, fecha, indice = null) {
+            const tarea = tareasMascota.find(t => t.id === id);
+            if (tarea) {
+                if (!tarea.completadas) tarea.completadas = {};
+                const key = indice !== null ? `${fecha}_${indice}` : fecha;
+                tarea.completadas[key] = !tarea.completadas[key];
+                guardarDatos();
+                actualizarTareasMascotaGrid();
+                actualizarCalendario();
+                actualizarResumen();
+            }
+        }
+
+        // ===== METAS FAMILIARES =====
+        function actualizarMetasGrid() {
+            const grid = document.getElementById('metasGrid');
+            
+            grid.innerHTML = metasFamiliares.map(meta => `
+                <div class="meta-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h3>${meta.titulo}</h3>
+                        <div>
+                            <button class="btn-icono" onclick="editarMeta(${meta.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-icono" onclick="eliminarMeta(${meta.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="meta-progreso">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Progreso: ${meta.progreso}%</span>
+                            <span>${meta.fecha ? 'Meta: ' + meta.fecha : ''}</span>
+                        </div>
+                        <div class="progreso-bar">
+                            <div class="progreso-fill" style="width: ${meta.progreso}%"></div>
+                        </div>
+                    </div>
+                    
+                    <input type="range" min="0" max="100" value="${meta.progreso}" 
+                           onchange="actualizarProgresoMeta(${meta.id}, this.value)"
+                           style="width: 100%; margin-top: 10px;">
+                </div>
+            `).join('');
+        }
+
+        function actualizarProgresoMeta(id, progreso) {
+            const meta = metasFamiliares.find(m => m.id === id);
+            if (meta) {
+                meta.progreso = parseInt(progreso);
+                guardarDatos();
+                actualizarMetasGrid();
+                actualizarResumen();
+            }
+        }
+
+        // ===== GALERÍA DE RECUERDOS =====
+        function actualizarGaleriaGrid(filtro = 'todos') {
+            const grid = document.getElementById('galeriaGrid');
+            
+            const recuerdosFiltrados = filtro === 'todos' ? recuerdos : 
+                                       recuerdos.filter(r => r.tipo === filtro);
+            
+            grid.innerHTML = recuerdosFiltrados.map(r => `
+                <div class="recuerdo-card" onclick="verRecuerdo(${r.id})">
+                    <div class="recuerdo-img">
+                        <i class="fas fa-${r.tipo === 'familia' ? 'users' : 'paw'}"></i>
+                    </div>
+                    <div class="recuerdo-info">
+                        <strong>${r.titulo}</strong>
+                        <div class="recuerdo-fecha">
+                            <i class="far fa-calendar"></i> ${r.fecha}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filtrarGaleria(filtro) {
+            document.querySelectorAll('.galeria-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            actualizarGaleriaGrid(filtro);
+        }
+
+        // ===== ACTUALIZAR RESUMEN =====
+        function actualizarResumen() {
+            const hoy = new Date().getDay() || 7;
+            const fechaHoy = new Date().toISOString().split('T')[0];
+            
+            // Tareas pendientes hoy
+            const tareasPendientes = tareasDomesticas.filter(t => 
+                t.dias.includes(hoy) && (!t.completadas || !t.completadas[fechaHoy])
+            ).length;
+            document.getElementById('resumenTareasHoy').textContent = tareasPendientes;
+            
+            // Cuidados mascota hoy
+            const cuidadosHoy = tareasMascota.filter(t => t.dias.includes(hoy)).length;
+            const cuidadosCompletados = tareasMascota.filter(t => {
+                if (!t.dias.includes(hoy)) return false;
+                if (t.horarios) {
+                    return t.horarios.every((_, i) => t.completadas && t.completadas[`${fechaHoy}_${i}`]);
+                }
+                return t.completadas && t.completadas[fechaHoy];
+            }).length;
+            document.getElementById('resumenMascotaHoy').textContent = `${cuidadosCompletados}/${cuidadosHoy}`;
+            
+            // Metas en progreso
+            document.getElementById('resumenMetas').textContent = metasFamiliares.length;
+            
+            // Total recuerdos
+            document.getElementById('resumenRecuerdos').textContent = recuerdos.length;
+        }
+
+        // ===== FUNCIONES PARA MODALES =====
+        function abrirModal(tipo) {
+            modalTipo = tipo;
+            modalEditandoId = null;
+            
+            const modal = document.getElementById('modalOverlay');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            switch(tipo) {
+                case 'tarea':
+                    title.innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Tarea Doméstica';
+                    content.innerHTML = `
+                        <div class="form-group">
+                            <label>Nombre de la tarea</label>
+                            <input type="text" id="tareaNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Días de la semana</label>
+                            <div class="dias-selector">
+                                ${diasAbr.map((dia, i) => `
+                                    <div class="dia-checkbox">
+                                        <input type="checkbox" id="diaTarea${i+1}" value="${i+1}">
+                                        <label for="diaTarea${i+1}">${dia}</label>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'tareaMascota':
+                    title.innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Tarea para Mascota';
+                    content.innerHTML = `
+                        <div class="form-group">
+                            <label>Nombre del cuidado</label>
+                            <input type="text" id="mascotaNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Días de la semana</label>
+                            <div class="dias-selector">
+                                ${diasAbr.map((dia, i) => `
+                                    <div class="dia-checkbox">
+                                        <input type="checkbox" id="diaMascota${i+1}" value="${i+1}" checked>
+                                        <label for="diaMascota${i+1}">${dia}</label>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Horarios (opcional, separados por coma)</label>
+                            <input type="text" id="mascotaHorarios" placeholder="Ej: 08:00, 20:00">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'meta':
+                    title.innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Meta Familiar';
+                    content.innerHTML = `
+                        <div class="form-group">
+                            <label>Título de la meta</label>
+                            <input type="text" id="metaTitulo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Progreso inicial (%)</label>
+                            <input type="number" id="metaProgreso" min="0" max="100" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha meta (opcional)</label>
+                            <input type="date" id="metaFecha">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'recuerdo':
+                    title.innerHTML = '<i class="fas fa-plus-circle"></i> Nuevo Recuerdo';
+                    content.innerHTML = `
+                        <div class="form-group">
+                            <label>Título</label>
+                            <input type="text" id="recuerdoTitulo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select id="recuerdoTipo">
+                                <option value="familia">Familia</option>
+                                <option value="mascota">Mascota</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="date" id="recuerdoFecha" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Imagen (opcional)</label>
+                            <input type="file" id="recuerdoImagen" accept="image/*">
+                        </div>
+                    `;
+                    break;
+            }
+            
+            modal.classList.add('active');
+            
+            document.getElementById('modalForm').onsubmit = function(e) {
+                e.preventDefault();
+                guardarModal();
+            };
+        }
+
+        function guardarModal() {
+            switch(modalTipo) {
+                case 'tarea':
+                    const dias = [];
+                    for (let i = 1; i <= 7; i++) {
+                        if (document.getElementById(`diaTarea${i}`).checked) dias.push(i);
+                    }
+                    
+                    const nuevaTarea = {
+                        id: modalEditandoId || Date.now(),
+                        nombre: document.getElementById('tareaNombre').value,
+                        dias: dias,
+                        completadas: {}
+                    };
+                    
+                    if (modalEditandoId) {
+                        const index = tareasDomesticas.findIndex(t => t.id === modalEditandoId);
+                        if (index !== -1) tareasDomesticas[index] = nuevaTarea;
+                    } else {
+                        tareasDomesticas.push(nuevaTarea);
+                    }
+                    break;
+                    
+                case 'tareaMascota':
+                    const diasMascota = [];
+                    for (let i = 1; i <= 7; i++) {
+                        if (document.getElementById(`diaMascota${i}`).checked) diasMascota.push(i);
+                    }
+                    
+                    const horarios = document.getElementById('mascotaHorarios').value
+                        .split(',')
+                        .map(h => h.trim())
+                        .filter(h => h);
+                    
+                    const nuevaTareaMascota = {
+                        id: modalEditandoId || Date.now(),
+                        nombre: document.getElementById('mascotaNombre').value,
+                        dias: diasMascota,
+                        horarios: horarios.length > 0 ? horarios : null,
+                        completadas: {}
+                    };
+                    
+                    if (modalEditandoId) {
+                        const index = tareasMascota.findIndex(t => t.id === modalEditandoId);
+                        if (index !== -1) tareasMascota[index] = nuevaTareaMascota;
+                    } else {
+                        tareasMascota.push(nuevaTareaMascota);
+                    }
+                    break;
+                    
+                case 'meta':
+                    const nuevaMeta = {
+                        id: modalEditandoId || Date.now(),
+                        titulo: document.getElementById('metaTitulo').value,
+                        progreso: parseInt(document.getElementById('metaProgreso').value) || 0,
+                        fecha: document.getElementById('metaFecha').value
+                    };
+                    
+                    if (modalEditandoId) {
+                        const index = metasFamiliares.findIndex(m => m.id === modalEditandoId);
+                        if (index !== -1) metasFamiliares[index] = nuevaMeta;
+                    } else {
+                        metasFamiliares.push(nuevaMeta);
+                    }
+                    break;
+                    
+                case 'recuerdo':
+                    const nuevoRecuerdo = {
+                        id: modalEditandoId || Date.now(),
+                        tipo: document.getElementById('recuerdoTipo').value,
+                        titulo: document.getElementById('recuerdoTitulo').value,
+                        fecha: document.getElementById('recuerdoFecha').value,
+                        imagen: null // Aquí se podría guardar la imagen en base64
+                    };
+                    
+                    if (modalEditandoId) {
+                        const index = recuerdos.findIndex(r => r.id === modalEditandoId);
+                        if (index !== -1) recuerdos[index] = nuevoRecuerdo;
+                    } else {
+                        recuerdos.push(nuevoRecuerdo);
+                    }
+                    break;
+            }
+            
+            guardarDatos();
+            actualizarTodo();
+            cerrarModal();
+        }
+
+        function editarTarea(id) {
+            const tarea = tareasDomesticas.find(t => t.id === id);
+            if (!tarea) return;
+            
+            modalTipo = 'tarea';
+            modalEditandoId = id;
+            
+            const modal = document.getElementById('modalOverlay');
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Tarea';
+            
+            let diasCheckbox = '';
+            for (let i = 1; i <= 7; i++) {
+                const checked = tarea.dias.includes(i) ? 'checked' : '';
+                diasCheckbox += `
+                    <div class="dia-checkbox">
+                        <input type="checkbox" id="diaTarea${i}" value="${i}" ${checked}>
+                        <label for="diaTarea${i}">${diasAbr[i-1]}</label>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div class="form-group">
+                    <label>Nombre de la tarea</label>
+                    <input type="text" id="tareaNombre" value="${tarea.nombre}" required>
+                </div>
+                <div class="form-group">
+                    <label>Días de la semana</label>
+                    <div class="dias-selector">
+                        ${diasCheckbox}
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            
+            document.getElementById('modalForm').onsubmit = function(e) {
+                e.preventDefault();
+                guardarModal();
+            };
+        }
+
+        function eliminarTarea(id) {
+            if (confirm('¿Eliminar esta tarea?')) {
+                tareasDomesticas = tareasDomesticas.filter(t => t.id !== id);
+                guardarDatos();
+                actualizarTodo();
+            }
+        }
+
+        function editarTareaMascota(id) {
+            const tarea = tareasMascota.find(t => t.id === id);
+            if (!tarea) return;
+            
+            modalTipo = 'tareaMascota';
+            modalEditandoId = id;
+            
+            const modal = document.getElementById('modalOverlay');
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Tarea';
+            
+            let diasCheckbox = '';
+            for (let i = 1; i <= 7; i++) {
+                const checked = tarea.dias.includes(i) ? 'checked' : '';
+                diasCheckbox += `
+                    <div class="dia-checkbox">
+                        <input type="checkbox" id="diaMascota${i}" value="${i}" ${checked}>
+                        <label for="diaMascota${i}">${diasAbr[i-1]}</label>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div class="form-group">
+                    <label>Nombre del cuidado</label>
+                    <input type="text" id="mascotaNombre" value="${tarea.nombre}" required>
+                </div>
+                <div class="form-group">
+                    <label>Días de la semana</label>
+                    <div class="dias-selector">
+                        ${diasCheckbox}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Horarios (opcional)</label>
+                    <input type="text" id="mascotaHorarios" value="${tarea.horarios ? tarea.horarios.join(', ') : ''}">
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            
+            document.getElementById('modalForm').onsubmit = function(e) {
+                e.preventDefault();
+                guardarModal();
+            };
+        }
+
+        function eliminarTareaMascota(id) {
+            if (confirm('¿Eliminar esta tarea?')) {
+                tareasMascota = tareasMascota.filter(t => t.id !== id);
+                guardarDatos();
+                actualizarTodo();
+            }
+        }
+
+        function editarMeta(id) {
+            const meta = metasFamiliares.find(m => m.id === id);
+            if (!meta) return;
+            
+            modalTipo = 'meta';
+            modalEditandoId = id;
+            
+            const modal = document.getElementById('modalOverlay');
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Meta';
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div class="form-group">
+                    <label>Título de la meta</label>
+                    <input type="text" id="metaTitulo" value="${meta.titulo}" required>
+                </div>
+                <div class="form-group">
+                    <label>Progreso (%)</label>
+                    <input type="number" id="metaProgreso" min="0" max="100" value="${meta.progreso}">
+                </div>
+                <div class="form-group">
+                    <label>Fecha meta</label>
+                    <input type="date" id="metaFecha" value="${meta.fecha || ''}">
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            
+            document.getElementById('modalForm').onsubmit = function(e) {
+                e.preventDefault();
+                guardarModal();
+            };
+        }
+
+        function eliminarMeta(id) {
+            if (confirm('¿Eliminar esta meta?')) {
+                metasFamiliares = metasFamiliares.filter(m => m.id !== id);
+                guardarDatos();
+                actualizarTodo();
+            }
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            modalTipo = null;
+            modalEditandoId = null;
+        }
+
+        function verRecuerdo(id) {
+            const recuerdo = recuerdos.find(r => r.id === id);
+            if (recuerdo) {
+                alert(`📸 ${recuerdo.titulo}\nFecha: ${recuerdo.fecha}\nTipo: ${recuerdo.tipo}`);
+            }
+        }
+    </script>
+</body>
+</html>

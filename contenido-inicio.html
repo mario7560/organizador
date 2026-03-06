@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador Shana ✨</title>
+    <style>
+        /* ===== ESTILO SHANA CON FLORES Y ANIMACIONES ===== */
+        :root {
+            --shana-purple: #8B5F8C;
+            --shana-pink: #F4A7B9;
+            --shana-lavender: #D9B8E0;
+            --shana-cream: #FFF9F0;
+            --shana-rose: #FFC0D0;
+            --shana-mint: #B8E0D4;
+            --shana-gold: #FFE5B4;
+            --shana-white: #FFFFFF;
+            --shana-shadow: rgba(139, 95, 140, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(145deg, #FFE9F3 0%, #FFF3E6 100%);
+            color: var(--shana-purple);
+            padding: 30px;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== FLORES ANIMADAS DE FONDO ===== */
+        .flower-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: floatFlower 15s infinite linear;
+            color: var(--shana-pink);
+            text-shadow: 0 0 10px rgba(244, 167, 185, 0.3);
+        }
+
+        .flower:nth-child(1) { top: 10%; left: 5%; animation-duration: 18s; color: #FFB6C1; }
+        .flower:nth-child(2) { top: 70%; right: 3%; animation-duration: 22s; color: #DDA0DD; }
+        .flower:nth-child(3) { bottom: 15%; left: 15%; animation-duration: 25s; color: #FFDAB9; }
+        .flower:nth-child(4) { top: 40%; right: 20%; animation-duration: 20s; color: #E6E6FA; }
+        .flower:nth-child(5) { bottom: 30%; right: 35%; animation-duration: 28s; color: #FFC0CB; }
+        .flower:nth-child(6) { top: 85%; left: 40%; animation-duration: 16s; color: #FADADD; }
+        .flower:nth-child(7) { top: 20%; right: 60%; animation-duration: 24s; color: #FFE4E1; }
+        .flower:nth-child(8) { bottom: 50%; left: 80%; animation-duration: 19s; color: #FFB7C5; }
+        .flower:nth-child(9) { top: 60%; left: 25%; animation-duration: 21s; color: #F8B8D0; }
+        .flower:nth-child(10) { bottom: 10%; right: 70%; animation-duration: 23s; color: #E0BBE4; }
+        .flower:nth-child(11) { top: 15%; left: 70%; animation-duration: 26s; color: #FBC8D5; }
+        .flower:nth-child(12) { bottom: 65%; right: 45%; animation-duration: 17s; color: #D4A5C9; }
+
+        @keyframes floatFlower {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(15px) rotate(-5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Efecto de brillo adicional */
+        .flower::after {
+            content: '🌸';
+            position: absolute;
+            font-size: 1rem;
+            opacity: 0.6;
+            filter: blur(1px);
+        }
+
+        .welcome-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== TARJETA PRINCIPAL CON EFECTOS ===== */
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px var(--shana-shadow), 0 0 0 2px rgba(255, 255, 255, 0.5) inset;
+            text-align: center;
+            margin-bottom: 40px;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,240,0.3) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 50px rgba(139, 95, 140, 0.3);
+        }
+
+        .welcome-icon {
+            font-size: 5rem;
+            color: var(--shana-pink);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+            text-shadow: 0 5px 15px rgba(244, 167, 185, 0.4);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .welcome-card h2 {
+            color: var(--shana-purple);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .welcome-text {
+            color: #7A6A7A;
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+
+        /* ===== STATS CON DISEÑO MEJORADO ===== */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            padding: 25px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 10px 30px var(--shana-shadow);
+            border-left: 5px solid var(--shana-pink);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(139, 95, 140, 0.25);
+            border-left: 5px solid var(--shana-lavender);
+        }
+
+        .stat-icon {
+            font-size: 2.2rem;
+            color: var(--shana-pink);
+            background: rgba(244, 167, 185, 0.15);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(244, 167, 185, 0.25);
+        }
+
+        .stat-info h3 {
+            color: var(--shana-purple);
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: #8F7A8F;
+            font-size: 0.95rem;
+        }
+
+        /* ===== BOTONES DE ACCIÓN ===== */
+        .welcome-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 35px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #F4A7B9 0%, #D9B8E0 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(244, 167, 185, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(139, 95, 140, 0.5);
+        }
+
+        .action-btn.outline {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--shana-pink);
+            border: 2px solid var(--shana-pink);
+            box-shadow: none;
+        }
+
+        .action-btn.outline:hover {
+            background: linear-gradient(135deg, #F4A7B9 0%, #D9B8E0 100%);
+            color: white;
+        }
+
+        /* ===== SECCIÓN DE ACTIVIDAD ===== */
+        .recent-activity {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 35px 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px var(--shana-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+        }
+
+        .recent-activity h3 {
+            color: var(--shana-purple);
+            font-size: 1.7rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 15px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(244, 167, 185, 0.2);
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateX(8px);
+            box-shadow: 0 5px 15px rgba(244, 167, 185, 0.2);
+        }
+
+        .activity-icon {
+            font-size: 1.4rem;
+            color: var(--shana-pink);
+            background: rgba(244, 167, 185, 0.15);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details p {
+            color: var(--shana-purple);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            color: #8F7A8F;
+            font-size: 0.9rem;
+        }
+
+        /* ===== MODAL PARA EVENTOS Y TAREAS ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 40px;
+            padding: 35px;
+            box-shadow: 0 30px 60px rgba(139, 95, 140, 0.3);
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-container::before {
+            content: '🌸';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            color: var(--shana-purple);
+            font-size: 1.8rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--shana-pink);
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: rgba(244, 167, 185, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: var(--shana-purple);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 14px 18px;
+            border: 2px solid rgba(244, 167, 185, 0.3);
+            border-radius: 25px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s;
+            color: #555;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--shana-pink);
+            box-shadow: 0 0 0 4px rgba(244, 167, 185, 0.2);
+        }
+
+        .form-group input[type="datetime-local"] {
+            color: #555;
+        }
+
+        .task-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .task-checkbox input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--shana-pink);
+        }
+
+        .task-checkbox label {
+            cursor: pointer;
+            color: var(--shana-purple);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #F4A7B9 0%, #D9B8E0 100%);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: rgba(244, 167, 185, 0.1);
+            color: var(--shana-pink);
+            border: 2px solid var(--shana-pink);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(244, 167, 185, 0.3);
+        }
+
+        /* ===== GALERÍA DE IMÁGENES ===== */
+        .gallery-section {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .gallery-section h3 {
+            color: var(--shana-purple);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(139, 95, 140, 0.2);
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            border-color: var(--shana-pink);
+        }
+
+        .gallery-item.selected {
+            border-color: var(--shana-pink);
+            box-shadow: 0 0 0 4px rgba(244, 167, 185, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-upload {
+            background: linear-gradient(135deg, #F4A7B9 20%, #D9B8E0 80%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .gallery-upload:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(244, 167, 185, 0.4);
+        }
+
+        /* ===== LISTA DE TAREAS ===== */
+        .tasks-section {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tasks-header h3 {
+            color: var(--shana-purple);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            border: 1px solid rgba(244, 167, 185, 0.2);
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateX(5px);
+        }
+
+        .task-item.completed {
+            opacity: 0.7;
+            background: rgba(220, 220, 220, 0.3);
+        }
+
+        .task-item.completed .task-title {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .task-check {
+            margin-right: 15px;
+        }
+
+        .task-check input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: var(--shana-pink);
+            cursor: pointer;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 600;
+            color: var(--shana-purple);
+            margin-bottom: 5px;
+        }
+
+        .task-date {
+            font-size: 0.85rem;
+            color: #8F7A8F;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .task-btn {
+            background: none;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--shana-pink);
+            transition: all 0.3s;
+        }
+
+        .task-btn:hover {
+            background: rgba(244, 167, 185, 0.2);
+            transform: scale(1.1);
+        }
+
+        .task-btn.delete:hover {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        /* ===== SELECTOR DE FECHA ===== */
+        .datetime-picker {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body { padding: 20px; }
+            .welcome-card { padding: 35px 25px; }
+            .welcome-card h2 { font-size: 2.1rem; }
+            .quick-stats { grid-template-columns: 1fr; }
+            .welcome-actions { flex-direction: column; }
+            .action-btn { width: 100%; justify-content: center; }
+            .modal-container { padding: 25px; }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-icon { font-size: 4rem; }
+            .stat-card { flex-direction: column; text-align: center; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .modal-buttons { flex-direction: column; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- FLORES ANIMADAS DE FONDO -->
+    <div class="flower-bg">
+        <div class="flower">🌸</div>
+        <div class="flower">🌼</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌸</div>
+        <div class="flower">🌷</div>
+        <div class="flower">🌻</div>
+        <div class="flower">🌼</div>
+        <div class="flower">🌸</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌷</div>
+        <div class="flower">🌻</div>
+        <div class="flower">🌼</div>
+    </div>
+
+    <div class="welcome-content">
+        <!-- TARJETA PRINCIPAL -->
+        <div class="welcome-card">
+            <div class="welcome-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h2>¡Bienvenida a tu Organizador, mi niña! 💕</h2>
+            <p class="welcome-text">
+                Organiza tu tiempo de manera dulce y efectiva. Aquí puedes crear eventos, tareas y personalizar todo con tus colores favoritos.
+            </p>
+
+            <div class="quick-stats" id="quickStats">
+                <!-- Los stats se actualizan dinámicamente -->
+            </div>
+
+            <div class="welcome-actions">
+                <button class="action-btn" id="newEventBtn">
+                    <i class="fas fa-calendar-plus"></i> Nuevo Evento
+                </button>
+                <button class="action-btn outline" id="newTaskBtn">
+                    <i class="fas fa-tasks"></i> Nueva Tarea
+                </button>
+            </div>
+        </div>
+
+        <!-- GALERÍA DE IMÁGENES -->
+        <div class="gallery-section">
+            <h3><i class="fas fa-images"></i> Galería de Fondos</h3>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Las imágenes se cargan aquí -->
+            </div>
+            <button class="gallery-upload" id="uploadImageBtn">
+                <i class="fas fa-cloud-upload-alt"></i> Subir imagen de fondo
+            </button>
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+        </div>
+
+        <!-- LISTA DE TAREAS -->
+        <div class="tasks-section">
+            <div class="tasks-header">
+                <h3><i class="fas fa-tasks"></i> Mis Tareas</h3>
+                <button class="action-btn outline" id="addTaskBtn" style="padding: 10px 20px;">
+                    <i class="fas fa-plus"></i> Tarea
+                </button>
+            </div>
+            <div id="tasksList">
+                <!-- Las tareas se cargan dinámicamente -->
+            </div>
+        </div>
+
+        <!-- ACTIVIDAD RECIENTE -->
+        <div class="recent-activity">
+            <h3><i class="fas fa-history"></i> Actividad Reciente</h3>
+            <div class="activity-list" id="activityList">
+                <!-- Actividad reciente se carga aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA EVENTOS -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-alt"></i> Nuevo Evento</h3>
+                <button class="close-modal" id="closeEventModal">&times;</button>
+            </div>
+            <form id="eventForm" class="modal-form">
+                <div class="form-group">
+                    <label><i class="fas fa-heading"></i> Título del evento</label>
+                    <input type="text" id="eventTitle" placeholder="Ej: Cita médica" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Descripción</label>
+                    <textarea id="eventDesc" rows="3" placeholder="Descripción del evento..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-day"></i> Fecha y hora</label>
+                    <input type="datetime-local" id="eventDateTime" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="modal-btn primary">
+                        <i class="fas fa-save"></i> Guardar Evento
+                    </button>
+                    <button type="button" class="modal-btn secondary" id="cancelEventBtn">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PARA TAREAS -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-tasks"></i> Nueva Tarea</h3>
+                <button class="close-modal" id="closeTaskModal">&times;</button>
+            </div>
+            <form id="taskForm" class="modal-form">
+                <div class="form-group">
+                    <label><i class="fas fa-heading"></i> Título de la tarea</label>
+                    <input type="text" id="taskTitle" placeholder="Ej: Estudiar matemáticas" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Descripción</label>
+                    <textarea id="taskDesc" rows="3" placeholder="Descripción de la tarea..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-day"></i> Fecha límite</label>
+                    <input type="datetime-local" id="taskDateTime" required>
+                </div>
+                <div class="task-checkbox">
+                    <input type="checkbox" id="taskCompleted">
+                    <label for="taskCompleted"><i class="fas fa-check-circle"></i> Marcar como completada</label>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="modal-btn primary">
+                        <i class="fas fa-save"></i> Guardar Tarea
+                    </button>
+                    <button type="button" class="modal-btn secondary" id="cancelTaskBtn">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PARA EDITAR TAREA -->
+    <div class="modal-overlay" id="editTaskModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Editar Tarea</h3>
+                <button class="close-modal" id="closeEditModal">&times;</button>
+            </div>
+            <form id="editTaskForm" class="modal-form">
+                <input type="hidden" id="editTaskId">
+                <div class="form-group">
+                    <label><i class="fas fa-heading"></i> Título de la tarea</label>
+                    <input type="text" id="editTaskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Descripción</label>
+                    <textarea id="editTaskDesc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-day"></i> Fecha límite</label>
+                    <input type="datetime-local" id="editTaskDateTime" required>
+                </div>
+                <div class="task-checkbox">
+                    <input type="checkbox" id="editTaskCompleted">
+                    <label for="editTaskCompleted"><i class="fas fa-check-circle"></i> Marcar como completada</label>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="modal-btn primary">
+                        <i class="fas fa-save"></i> Actualizar
+                    </button>
+                    <button type="button" class="modal-btn secondary" id="cancelEditBtn">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== SISTEMA DE ALMACENAMIENTO LOCAL =====
+        let tasks = JSON.parse(localStorage.getItem('shana_tasks')) || [];
+        let events = JSON.parse(localStorage.getItem('shana_events')) || [];
+        let selectedBackground = localStorage.getItem('shana_background') || '';
+        let galleryImages = JSON.parse(localStorage.getItem('shana_gallery')) || [];
+
+        // ===== FUNCIONES PARA ESTADÍSTICAS =====
+        function updateStats() {
+            const today = new Date().toDateString();
+            const eventsToday = events.filter(e => new Date(e.dateTime).toDateString() === today).length;
+            
+            const totalStudyTime = tasks
+                .filter(t => t.title.toLowerCase().includes('estudio') || t.description?.toLowerCase().includes('estudio'))
+                .reduce((acc, t) => acc + (t.completed ? 1 : 0), 0) * 30; // 30 min por tarea de estudio
+            
+            const completedTasks = tasks.filter(t => t.completed).length;
+            const totalTasks = tasks.length;
+
+            const statsHTML = `
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check stat-icon"></i>
+                    <div class="stat-info">
+                        <h3>${eventsToday}</h3>
+                        <p>Eventos hoy</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-book-open stat-icon"></i>
+                    <div class="stat-info">
+                        <h3>${totalStudyTime}h</h3>
+                        <p>Tiempo estudio</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-tasks stat-icon"></i>
+                    <div class="stat-info">
+                        <h3>${completedTasks}/${totalTasks}</h3>
+                        <p>Tareas completadas</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('quickStats').innerHTML = statsHTML;
+        }
+
+        // ===== FUNCIONES PARA TAREAS =====
+        function renderTasks() {
+            const tasksList = document.getElementById('tasksList');
+            
+            if (tasks.length === 0) {
+                tasksList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #8F7A8F;">
+                        <i class="fas fa-clipboard-list" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>No hay tareas aún. ¡Crea una nueva!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            tasksList.innerHTML = tasks.map(task => `
+                <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+                    <div class="task-check">
+                        <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTaskComplete('${task.id}')">
+                    </div>
+                    <div class="task-content">
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-date">
+                            <i class="far fa-calendar-alt"></i> 
+                            ${new Date(task.dateTime).toLocaleString()}
+                        </div>
+                        ${task.description ? `<div style="font-size: 0.9rem; color: #7A6A7A; margin-top: 5px;">${task.description}</div>` : ''}
+                    </div>
+                    <div class="task-actions">
+                        <button class="task-btn" onclick="editTask('${task.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="task-btn delete" onclick="deleteTask('${task.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== FUNCIONES PARA TAREAS (continuación) =====
+        window.toggleTaskComplete = function(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+                updateStats();
+                addActivity(task.completed ? 'completó' : 'reactivó', 'tarea', task.title);
+            }
+        };
+
+        window.deleteTask = function(taskId) {
+            if (confirm('¿Estás segura de eliminar esta tarea? 💕')) {
+                const task = tasks.find(t => t.id === taskId);
+                tasks = tasks.filter(t => t.id !== taskId);
+                saveTasks();
+                renderTasks();
+                updateStats();
+                if (task) addActivity('eliminó', 'tarea', task.title);
+            }
+        };
+
+        window.editTask = function(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                document.getElementById('editTaskId').value = task.id;
+                document.getElementById('editTaskTitle').value = task.title;
+                document.getElementById('editTaskDesc').value = task.description || '';
+                
+                // Formatear fecha para input datetime-local
+                const date = new Date(task.dateTime);
+                const formattedDate = date.toISOString().slice(0, 16);
+                document.getElementById('editTaskDateTime').value = formattedDate;
+                
+                document.getElementById('editTaskCompleted').checked = task.completed || false;
+                
+                document.getElementById('editTaskModal').classList.add('active');
+            }
+        };
+
+        // ===== FUNCIONES PARA EVENTOS =====
+        function saveEvent(event) {
+            event.id = Date.now().toString();
+            events.push(event);
+            localStorage.setItem('shana_events', JSON.stringify(events));
+            updateStats();
+            addActivity('creó', 'evento', event.title);
+        }
+
+        // ===== FUNCIONES PARA ACTIVIDAD RECIENTE =====
+        let activities = JSON.parse(localStorage.getItem('shana_activities')) || [];
+
+        function addActivity(action, type, name) {
+            const activity = {
+                id: Date.now(),
+                action,
+                type,
+                name,
+                time: new Date().toISOString(),
+                icon: type === 'evento' ? 'fa-calendar' : 'fa-tasks'
+            };
+            
+            activities.unshift(activity);
+            if (activities.length > 10) activities.pop();
+            
+            localStorage.setItem('shana_activities', JSON.stringify(activities));
+            renderActivities();
+        }
+
+        function renderActivities() {
+            const activityList = document.getElementById('activityList');
+            
+            if (activities.length === 0) {
+                activityList.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: #8F7A8F;">
+                        <i class="fas fa-history" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                        <p>No hay actividad reciente</p>
+                    </div>
+                `;
+                return;
+            }
+
+            activityList.innerHTML = activities.map(act => {
+                const timeAgo = getTimeAgo(new Date(act.time));
+                return `
+                    <div class="activity-item">
+                        <i class="fas ${act.icon} activity-icon"></i>
+                        <div class="activity-details">
+                            <p>Se ${act.action} ${act.type} "${act.name}"</p>
+                            <span class="activity-time">${timeAgo}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 60);
+            const diffDays = Math.floor(diffHours / 24);
+
+            if (diffMins < 1) return 'Justo ahora';
+            if (diffMins < 60) return `Hace ${diffMins} ${diffMins === 1 ? 'minuto' : 'minutos'}`;
+            if (diffHours < 24) return `Hace ${diffHours} ${diffHours === 1 ? 'hora' : 'horas'}`;
+            return `Hace ${diffDays} ${diffDays === 1 ? 'día' : 'días'}`;
+        }
+
+        // ===== FUNCIONES PARA GUARDADO =====
+        function saveTasks() {
+            localStorage.setItem('shana_tasks', JSON.stringify(tasks));
+        }
+
+        // ===== FUNCIONES PARA GALERÍA =====
+        function renderGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            // Imágenes por defecto
+            const defaultImages = [
+                'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=200', // Flores rosas
+                'https://images.unsplash.com/photo-1533073520977-3b2fd3c03b85?w=200', // Lavanda
+                'https://images.unsplash.com/photo-1518895949257-7622c7c8b3c4?w=200', // Rosas
+                'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=200', // Tulipanes
+                'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=200', // Girasoles
+                'https://images.unsplash.com/photo-1468327768560-75b778cbb551?w=200', // Campo de flores
+            ];
+
+            const allImages = [...galleryImages, ...defaultImages].slice(0, 12);
+
+            galleryGrid.innerHTML = allImages.map((img, index) => `
+                <div class="gallery-item ${selectedBackground === img ? 'selected' : ''}" onclick="selectBackground('${img}', ${index})">
+                    <img src="${typeof img === 'string' ? img : URL.createObjectURL(img)}" alt="Fondo ${index + 1}">
+                </div>
+            `).join('');
+        }
+
+        window.selectBackground = function(imageUrl, index) {
+            selectedBackground = imageUrl;
+            localStorage.setItem('shana_background', imageUrl);
+            
+            // Aplicar fondo al body
+            document.body.style.backgroundImage = `url('${imageUrl}')`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundAttachment = 'fixed';
+            document.body.style.backgroundPosition = 'center';
+            
+            // Mantener el overlay de flores
+            document.querySelector('.flower-bg').style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+            document.querySelector('.flower-bg').style.backgroundBlendMode = 'overlay';
+            
+            renderGallery();
+            addActivity('cambió', 'fondo', 'fondo de pantalla');
+        };
+
+        // ===== CONFIGURACIÓN DE MODALES =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar datos guardados
+            renderTasks();
+            updateStats();
+            renderActivities();
+            renderGallery();
+
+            // Aplicar fondo guardado
+            if (selectedBackground) {
+                document.body.style.backgroundImage = `url('${selectedBackground}')`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundAttachment = 'fixed';
+                document.body.style.backgroundPosition = 'center';
+                document.querySelector('.flower-bg').style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+            }
+
+            // Botones para abrir modales
+            document.getElementById('newEventBtn').addEventListener('click', () => {
+                // Establecer fecha y hora actual por defecto
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                document.getElementById('eventDateTime').value = now.toISOString().slice(0, 16);
+                document.getElementById('eventModal').classList.add('active');
+            });
+
+            document.getElementById('newTaskBtn').addEventListener('click', () => {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                document.getElementById('taskDateTime').value = now.toISOString().slice(0, 16);
+                document.getElementById('taskModal').classList.add('active');
+            });
+
+            document.getElementById('addTaskBtn').addEventListener('click', () => {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                document.getElementById('taskDateTime').value = now.toISOString().slice(0, 16);
+                document.getElementById('taskModal').classList.add('active');
+            });
+
+            // Cerrar modales
+            const closeButtons = [
+                'closeEventModal', 'cancelEventBtn',
+                'closeTaskModal', 'cancelTaskBtn',
+                'closeEditModal', 'cancelEditBtn'
+            ];
+
+            closeButtons.forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+                    });
+                }
+            });
+
+            // Cerrar al hacer clic fuera del modal
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('active');
+                    }
+                });
+            });
+
+            // Formulario de evento
+            document.getElementById('eventForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const event = {
+                    title: document.getElementById('eventTitle').value,
+                    description: document.getElementById('eventDesc').value,
+                    dateTime: document.getElementById('eventDateTime').value
+                };
+                
+                saveEvent(event);
+                
+                // Cerrar modal y limpiar
+                document.getElementById('eventModal').classList.remove('active');
+                e.target.reset();
+                
+                // Notificación
+                alert('✨ ¡Evento guardado con éxito!');
+            });
+
+            // Formulario de tarea
+            document.getElementById('taskForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const task = {
+                    id: Date.now().toString(),
+                    title: document.getElementById('taskTitle').value,
+                    description: document.getElementById('taskDesc').value,
+                    dateTime: document.getElementById('taskDateTime').value,
+                    completed: document.getElementById('taskCompleted').checked
+                };
+                
+                tasks.push(task);
+                saveTasks();
+                renderTasks();
+                updateStats();
+                addActivity('creó', 'tarea', task.title);
+                
+                // Cerrar modal y limpiar
+                document.getElementById('taskModal').classList.remove('active');
+                e.target.reset();
+                
+                alert('📋 ¡Tarea guardada con éxito!');
+            });
+
+            // Formulario de edición
+            document.getElementById('editTaskForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const taskId = document.getElementById('editTaskId').value;
+                const task = tasks.find(t => t.id === taskId);
+                
+                if (task) {
+                    task.title = document.getElementById('editTaskTitle').value;
+                    task.description = document.getElementById('editTaskDesc').value;
+                    task.dateTime = document.getElementById('editTaskDateTime').value;
+                    task.completed = document.getElementById('editTaskCompleted').checked;
+                    
+                    saveTasks();
+                    renderTasks();
+                    updateStats();
+                    addActivity('editó', 'tarea', task.title);
+                    
+                    document.getElementById('editTaskModal').classList.remove('active');
+                    alert('✏️ ¡Tarea actualizada!');
+                }
+            });
+
+            // Subir imagen
+            document.getElementById('uploadImageBtn').addEventListener('click', () => {
+                document.getElementById('imageUpload').click();
+            });
+
+            document.getElementById('imageUpload').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        galleryImages.push(event.target.result);
+                        localStorage.setItem('shana_gallery', JSON.stringify(galleryImages));
+                        renderGallery();
+                        addActivity('subió', 'imagen', file.name);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Botones de navegación al padre
+            const quickCalendar = document.getElementById('quickCalendar');
+            if (quickCalendar) {
+                quickCalendar.addEventListener('click', function() {
+                    if (window.parent && window.parent.document) {
+                        const calendarioBtn = window.parent.document.querySelector('[data-page="calendario"]');
+                        if (calendarioBtn) calendarioBtn.click();
+                    }
+                });
+            }
+
+            const quickTask = document.getElementById('quickTask');
+            if (quickTask) {
+                quickTask.addEventListener('click', function() {
+                    if (window.parent && window.parent.document) {
+                        const tareasBtn = window.parent.document.querySelector('[data-page="tareas"]');
+                        if (tareasBtn) tareasBtn.click();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
