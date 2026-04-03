@@ -23,10 +23,13 @@ const pageTitles = {
     'comidas': 'Comidas Saludables',
     'familia': 'Familia y Mascota',
     'pareja': 'Pareja',
-    'shana': 'SHANA ❤️',
+    'shana': '❤️ SHANA ❤️',
     'recomendaciones': 'Recomendaciones',
     'trabajo': 'Trabajo',
-    'amistad': 'Amigos'
+    'amistad': 'Amigos',
+    'metas': 'Metas',
+    'notas': '📝 Bloc de Notas',
+    'diario': '📔 Mi Diario Personal',
 };
 
 // Mapeo de páginas a archivos
@@ -43,7 +46,10 @@ const pageFiles = {
     'shana': 'shana.html',
     'recomendaciones': 'recomendaciones.html',
     'trabajo': 'trabajo.html',
-    'amistad': 'amistad.html'
+    'amistad': 'amistad.html',
+    'metas': 'metas.html',
+    'notas': 'notas.html',
+    'diario': 'diario.html',
 };
 
 // Configurar tema inicial
